@@ -1,0 +1,36 @@
+openapi: 3.0.3
+info:
+  title: Pet Travel Rules API
+  version: 1.0.0
+  description: Returns pet travel rules by origin and destination.
+paths:
+  /v1/pet-travel/check:
+    post:
+      summary: Check route requirements.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [originCountry, destinationCountry, species]
+              properties:
+                originCountry: { type: string }
+                destinationCountry: { type: string }
+                species: { type: string, enum: [dog, cat, bird, rabbit, other] }
+      responses:
+        "200":
+          description: Travel rules.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vaccinationsRequired:
+                    type: array
+                    items: { type: string }
+                  quarantineDays: { type: integer }
+                  documents:
+                    type: array
+                    items: { type: string }
+

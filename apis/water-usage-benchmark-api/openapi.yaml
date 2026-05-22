@@ -1,0 +1,34 @@
+openapi: 3.0.3
+info:
+  title: Water Usage Benchmark API
+  version: 1.0.0
+  description: Benchmarks household water usage and suggests reductions.
+paths:
+  /v1/water/benchmark:
+    post:
+      summary: Benchmark usage against peers.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [householdSize, monthlyLiters, climateZone]
+              properties:
+                householdSize: { type: integer, minimum: 1 }
+                monthlyLiters: { type: number, minimum: 0 }
+                climateZone: { type: string }
+      responses:
+        "200":
+          description: Benchmarking result.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  percentile: { type: integer, minimum: 0, maximum: 100 }
+                  category: { type: string, enum: [efficient, average, high] }
+                  recommendedActions:
+                    type: array
+                    items: { type: string }
+

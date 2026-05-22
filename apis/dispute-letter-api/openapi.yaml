@@ -1,0 +1,35 @@
+openapi: 3.0.3
+info:
+  title: Dispute Letter API
+  version: 1.0.0
+  description: Produces structured consumer dispute letter drafts.
+paths:
+  /v1/letters/dispute:
+    post:
+      summary: Generate a dispute letter draft.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [claimType, providerName, incidentDate, summary]
+              properties:
+                claimType: { type: string }
+                providerName: { type: string }
+                incidentDate: { type: string, format: date }
+                summary: { type: string }
+      responses:
+        "200":
+          description: Draft letter output.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subject: { type: string }
+                  body: { type: string }
+                  evidenceChecklist:
+                    type: array
+                    items: { type: string }
+

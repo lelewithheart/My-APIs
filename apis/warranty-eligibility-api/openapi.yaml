@@ -1,0 +1,35 @@
+openapi: 3.0.3
+info:
+  title: Warranty Eligibility API
+  version: 1.0.0
+  description: Checks likely warranty coverage based on failure details.
+paths:
+  /v1/warranty/check:
+    post:
+      summary: Evaluate warranty eligibility.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [purchaseDate, issueDate, productType, failureCategory]
+              properties:
+                purchaseDate: { type: string, format: date }
+                issueDate: { type: string, format: date }
+                productType: { type: string }
+                failureCategory: { type: string }
+      responses:
+        "200":
+          description: Warranty decision signal.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  likelyEligible: { type: boolean }
+                  confidence: { type: number, minimum: 0, maximum: 1 }
+                  nextSteps:
+                    type: array
+                    items: { type: string }
+

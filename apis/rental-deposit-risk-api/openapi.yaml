@@ -1,0 +1,34 @@
+openapi: 3.0.3
+info:
+  title: Rental Deposit Risk API
+  version: 1.0.0
+  description: Scores risk of deposit disputes using case details.
+paths:
+  /v1/rental/deposit-risk:
+    post:
+      summary: Calculate dispute risk.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [rentAmount, depositAmount, moveOutDate, hasInspectionReport]
+              properties:
+                rentAmount: { type: number, minimum: 0 }
+                depositAmount: { type: number, minimum: 0 }
+                moveOutDate: { type: string, format: date }
+                hasInspectionReport: { type: boolean }
+      responses:
+        "200":
+          description: Risk score result.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  riskScore: { type: integer, minimum: 0, maximum: 100 }
+                  rationale:
+                    type: array
+                    items: { type: string }
+
