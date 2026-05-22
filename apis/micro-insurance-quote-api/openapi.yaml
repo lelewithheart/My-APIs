@@ -1,0 +1,36 @@
+openapi: 3.0.3
+info:
+  title: Micro Insurance Quote API
+  version: 1.0.0
+  description: Generates short-term insurance quote ranges.
+paths:
+  /v1/quotes/micro-insurance:
+    post:
+      summary: Get a quote estimate.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [coverageType, insuredValue, durationDays]
+              properties:
+                coverageType: { type: string, enum: [event, gadget, trip] }
+                insuredValue: { type: number, minimum: 1 }
+                durationDays: { type: integer, minimum: 1 }
+      responses:
+        "200":
+          description: Quote output.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  premiumRange:
+                    type: object
+                    properties:
+                      min: { type: number }
+                      max: { type: number }
+                  deductibleOptions:
+                    type: array
+                    items: { type: number }

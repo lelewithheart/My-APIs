@@ -1,0 +1,38 @@
+openapi: 3.0.3
+info:
+  title: Repair Cost Estimator API
+  version: 1.0.0
+  description: Estimates home or appliance repair ranges from issue details.
+paths:
+  /v1/repairs/estimate:
+    post:
+      summary: Estimate repair cost range.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [category, issueType, urgencyLevel]
+              properties:
+                category: { type: string, enum: [plumbing, electrical, appliance, roofing] }
+                issueType: { type: string }
+                urgencyLevel: { type: string, enum: [low, medium, high] }
+                locationFactor: { type: number, minimum: 0.5, maximum: 2.5 }
+      responses:
+        "200":
+          description: Repair estimate output.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  estimateRange:
+                    type: object
+                    properties:
+                      min: { type: number }
+                      max: { type: number }
+                  confidence: { type: number, minimum: 0, maximum: 1 }
+                  notes:
+                    type: array
+                    items: { type: string }

@@ -1,0 +1,30 @@
+openapi: 3.0.3
+info:
+  title: Food Shelf Life API
+  version: 1.0.0
+  description: Estimates shelf life and spoilage risk by storage conditions.
+paths:
+  /v1/shelf-life/estimate:
+    post:
+      summary: Estimate remaining shelf life.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [itemName, storageType, openedAt]
+              properties:
+                itemName: { type: string }
+                storageType: { type: string, enum: [pantry, fridge, freezer] }
+                openedAt: { type: string, format: date-time }
+      responses:
+        "200":
+          description: Shelf life estimate.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  safeUntil: { type: string, format: date-time }
+                  spoilageRisk: { type: string, enum: [low, medium, high] }

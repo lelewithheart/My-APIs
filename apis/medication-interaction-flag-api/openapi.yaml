@@ -1,0 +1,35 @@
+openapi: 3.0.3
+info:
+  title: Medication Interaction Flag API
+  version: 1.0.0
+  description: Flags potential medication interactions for triage workflows.
+paths:
+  /v1/medications/interaction-flags:
+    post:
+      summary: Check potential interaction flags.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [medications]
+              properties:
+                medications:
+                  type: array
+                  minItems: 1
+                  items: { type: string }
+                age: { type: integer, minimum: 0 }
+      responses:
+        "200":
+          description: Interaction triage report.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  riskLevel: { type: string, enum: [low, moderate, high] }
+                  flaggedPairs:
+                    type: array
+                    items: { type: string }
+                  recommendation: { type: string }

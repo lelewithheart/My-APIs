@@ -1,0 +1,33 @@
+openapi: 3.0.3
+info:
+  title: Utility Outage Risk API
+  version: 1.0.0
+  description: Predicts outage risk and preparation recommendations.
+paths:
+  /v1/outage/risk:
+    post:
+      summary: Get outage risk by location and weather.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [postalCode, utilityType, forecastWindKph, forecastPrecipMm]
+              properties:
+                postalCode: { type: string }
+                utilityType: { type: string, enum: [electricity, water, gas, internet] }
+                forecastWindKph: { type: number, minimum: 0 }
+                forecastPrecipMm: { type: number, minimum: 0 }
+      responses:
+        "200":
+          description: Outage risk.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  riskLevel: { type: string, enum: [low, medium, high] }
+                  prepChecklist:
+                    type: array
+                    items: { type: string }

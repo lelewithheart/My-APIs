@@ -1,0 +1,38 @@
+openapi: 3.0.3
+info:
+  title: Subscription Pricing Watch API
+  version: 1.0.0
+  description: Tracks plan pricing changes for subscription services.
+paths:
+  /v1/pricing/compare:
+    post:
+      summary: Compare monitored plans.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [serviceName, region, planNames]
+              properties:
+                serviceName: { type: string }
+                region: { type: string }
+                planNames:
+                  type: array
+                  items: { type: string }
+      responses:
+        "200":
+          description: Current and historic comparison.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  plans:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        planName: { type: string }
+                        currentPrice: { type: number }
+                        change30dPercent: { type: number }

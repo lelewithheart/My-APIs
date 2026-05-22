@@ -1,0 +1,35 @@
+openapi: 3.0.3
+info:
+  title: Eldercare Check-in API
+  version: 1.0.0
+  description: Schedules and evaluates eldercare wellbeing check-ins.
+paths:
+  /v1/checkins/plan:
+    post:
+      summary: Build a weekly check-in plan.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [ageGroup, livingSituation, chronicConditionCount]
+              properties:
+                ageGroup: { type: string, enum: [60-69, 70-79, 80-plus] }
+                livingSituation: { type: string, enum: [alone, partner, assisted] }
+                chronicConditionCount: { type: integer, minimum: 0 }
+      responses:
+        "200":
+          description: Check-in plan output.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recommendedWeeklyCheckins: { type: integer }
+                  preferredChannels:
+                    type: array
+                    items: { type: string }
+                  alertRules:
+                    type: array
+                    items: { type: string }

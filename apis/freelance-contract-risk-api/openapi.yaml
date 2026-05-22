@@ -1,0 +1,36 @@
+openapi: 3.0.3
+info:
+  title: Freelance Contract Risk API
+  version: 1.0.0
+  description: Scores payment and scope risk in freelance agreements.
+paths:
+  /v1/contracts/risk-score:
+    post:
+      summary: Evaluate contract risk.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [upfrontPercent, revisionRounds, paymentTermDays, hasLateFeeClause]
+              properties:
+                upfrontPercent: { type: number, minimum: 0, maximum: 100 }
+                revisionRounds: { type: integer, minimum: 0 }
+                paymentTermDays: { type: integer, minimum: 0 }
+                hasLateFeeClause: { type: boolean }
+      responses:
+        "200":
+          description: Contract risk assessment.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  riskScore: { type: integer, minimum: 0, maximum: 100 }
+                  keyWarnings:
+                    type: array
+                    items: { type: string }
+                  suggestedClauses:
+                    type: array
+                    items: { type: string }

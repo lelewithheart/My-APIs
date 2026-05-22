@@ -1,0 +1,32 @@
+openapi: 3.0.3
+info:
+  title: Shift Swap Fairness API
+  version: 1.0.0
+  description: Evaluates fairness of employee shift swaps.
+paths:
+  /v1/shifts/fairness:
+    post:
+      summary: Score a proposed shift swap.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [employeeA, employeeB, shiftHours, historicalNightShiftsA, historicalNightShiftsB]
+              properties:
+                employeeA: { type: string }
+                employeeB: { type: string }
+                shiftHours: { type: number, minimum: 1 }
+                historicalNightShiftsA: { type: integer, minimum: 0 }
+                historicalNightShiftsB: { type: integer, minimum: 0 }
+      responses:
+        "200":
+          description: Fairness result.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  fairnessScore: { type: integer, minimum: 0, maximum: 100 }
+                  recommendation: { type: string }

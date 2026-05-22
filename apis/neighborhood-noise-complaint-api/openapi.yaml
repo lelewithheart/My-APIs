@@ -1,0 +1,34 @@
+openapi: 3.0.3
+info:
+  title: Neighborhood Noise Complaint API
+  version: 1.0.0
+  description: Structures incident records and complaint package quality scores.
+paths:
+  /v1/noise/complaint-package:
+    post:
+      summary: Build a complaint package.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [incidentCount, averageDb, nighttimeIncidents, hasEvidence]
+              properties:
+                incidentCount: { type: integer, minimum: 1 }
+                averageDb: { type: number, minimum: 0 }
+                nighttimeIncidents: { type: integer, minimum: 0 }
+                hasEvidence: { type: boolean }
+      responses:
+        "200":
+          description: Complaint package score.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  packageStrengthScore: { type: integer, minimum: 0, maximum: 100 }
+                  missingItems:
+                    type: array
+                    items: { type: string }
+                  suggestedNextStep: { type: string }

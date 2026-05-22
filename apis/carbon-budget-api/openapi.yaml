@@ -1,0 +1,33 @@
+openapi: 3.0.3
+info:
+  title: Carbon Budget API
+  version: 1.0.0
+  description: Calculates recommended carbon budgets and reduction actions.
+paths:
+  /v1/budget:
+    post:
+      summary: Generate a monthly carbon budget plan.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [country, householdSize, monthlyKwh, monthlyKm]
+              properties:
+                country: { type: string }
+                householdSize: { type: integer, minimum: 1 }
+                monthlyKwh: { type: number, minimum: 0 }
+                monthlyKm: { type: number, minimum: 0 }
+      responses:
+        "200":
+          description: Budget recommendation.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  monthlyBudgetKgCo2e: { type: number }
+                  topActions:
+                    type: array
+                    items: { type: string }
