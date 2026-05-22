@@ -1,0 +1,35 @@
+openapi: 3.0.3
+info:
+  title: Invoice Late Fee API
+  version: 1.0.0
+  description: Calculates compliant late-fee schedules for invoices.
+paths:
+  /v1/invoices/late-fee:
+    post:
+      summary: Calculate late fee and reminder timeline.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [invoiceAmount, dueDate, paidDate, monthlyPenaltyPercent]
+              properties:
+                invoiceAmount: { type: number, minimum: 0 }
+                dueDate: { type: string, format: date }
+                paidDate: { type: string, format: date }
+                monthlyPenaltyPercent: { type: number, minimum: 0 }
+      responses:
+        "200":
+          description: Late fee result.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  daysLate: { type: integer, minimum: 0 }
+                  lateFee: { type: number, minimum: 0 }
+                  reminderSchedule:
+                    type: array
+                    items: { type: string, format: date }
+
