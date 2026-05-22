@@ -32,4 +32,3 @@ paths:
                   reminderSchedule:
                     type: array
                     items: { type: string, format: date }
-

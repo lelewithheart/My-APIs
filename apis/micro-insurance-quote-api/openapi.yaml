@@ -34,4 +34,3 @@ paths:
                   deductibleOptions:
                     type: array
                     items: { type: number }
-

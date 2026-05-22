@@ -31,4 +31,3 @@ paths:
                   rationale:
                     type: array
                     items: { type: string }
-

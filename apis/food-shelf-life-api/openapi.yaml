@@ -28,4 +28,3 @@ paths:
                 properties:
                   safeUntil: { type: string, format: date-time }
                   spoilageRisk: { type: string, enum: [low, medium, high] }
-

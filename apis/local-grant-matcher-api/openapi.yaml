@@ -34,4 +34,3 @@ paths:
                         programName: { type: string }
                         maxAward: { type: number }
                         deadline: { type: string, format: date }
-

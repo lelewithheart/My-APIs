@@ -31,4 +31,3 @@ paths:
                   recommendedActions:
                     type: array
                     items: { type: string }
-

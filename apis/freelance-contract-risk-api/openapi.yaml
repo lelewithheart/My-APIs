@@ -34,4 +34,3 @@ paths:
                   suggestedClauses:
                     type: array
                     items: { type: string }
-

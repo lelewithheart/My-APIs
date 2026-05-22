@@ -36,4 +36,3 @@ paths:
                         planName: { type: string }
                         currentPrice: { type: number }
                         change30dPercent: { type: number }
-

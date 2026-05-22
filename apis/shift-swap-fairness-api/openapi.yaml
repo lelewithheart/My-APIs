@@ -30,4 +30,3 @@ paths:
                 properties:
                   fairnessScore: { type: integer, minimum: 0, maximum: 100 }
                   recommendation: { type: string }
-

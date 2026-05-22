@@ -33,4 +33,3 @@ paths:
                   alertRules:
                     type: array
                     items: { type: string }
-

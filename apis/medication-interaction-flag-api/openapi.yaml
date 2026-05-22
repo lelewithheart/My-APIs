@@ -33,4 +33,3 @@ paths:
                     type: array
                     items: { type: string }
                   recommendation: { type: string }
-
